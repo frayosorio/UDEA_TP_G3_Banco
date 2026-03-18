@@ -44,20 +44,16 @@ public class FrmBanco extends JFrame {
         JButton btnAgregarCuenta = new JButton();
         btnAgregarCuenta.setIcon(new ImageIcon(getClass().getResource("/iconos/AgregarCuenta.png")));
         btnAgregarCuenta.setToolTipText("Agregar Cuenta");
-        btnAgregarCuenta.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                btnAgregarCuentaClick();
-            }
+        btnAgregarCuenta.addActionListener(evt -> {
+            btnAgregarCuentaClick();
         });
         tbBanco.add(btnAgregarCuenta);
 
         JButton btnQuitarCuenta = new JButton();
         btnQuitarCuenta.setIcon(new ImageIcon(getClass().getResource("/iconos/QuitarCuenta.png")));
         btnQuitarCuenta.setToolTipText("Quitar Cuenta");
-        btnQuitarCuenta.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                btnQuitarCuentaClick();
-            }
+        btnQuitarCuenta.addActionListener(evt -> {
+            btnQuitarCuentaClick();
         });
         tbBanco.add(btnQuitarCuenta);
 
@@ -133,19 +129,15 @@ public class FrmBanco extends JFrame {
 
         JButton btnGuardarCuenta = new JButton("Guardar");
         btnGuardarCuenta.setBounds(220, 70, 100, 25);
-        btnGuardarCuenta.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                btnGuardarCuentaClick();
-            }
+        btnGuardarCuenta.addActionListener(evt -> {
+            btnGuardarCuentaClick();
         });
         pnlEditarCuenta.add(btnGuardarCuenta);
 
         JButton btnCancelarCuenta = new JButton("Cancelar");
         btnCancelarCuenta.setBounds(320, 70, 100, 25);
-        btnCancelarCuenta.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                btnCancelarCuentaClick();
-            }
+        btnCancelarCuenta.addActionListener(evt -> {
+            btnCancelarCuentaClick();
         });
         pnlEditarCuenta.add(btnCancelarCuenta);
 
@@ -204,19 +196,15 @@ public class FrmBanco extends JFrame {
 
         JButton btnGuardarTransaccion = new JButton("Guardar");
         btnGuardarTransaccion.setBounds(220, 70, 100, 25);
-        btnGuardarTransaccion.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                btnGuardarTransaccionClick();
-            }
+        btnGuardarTransaccion.addActionListener(evt -> {
+            btnGuardarTransaccionClick();
         });
         pnlEditarTransaccion.add(btnGuardarTransaccion);
 
         JButton btnCancelarTransaccion = new JButton("Cancelar");
         btnCancelarTransaccion.setBounds(320, 70, 100, 25);
-        btnCancelarTransaccion.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                btnCancelarTransaccionClick();
-            }
+        btnCancelarTransaccion.addActionListener(evt -> {
+            btnCancelarTransaccionClick();
         });
         pnlEditarTransaccion.add(btnCancelarTransaccion);
 
@@ -241,8 +229,8 @@ public class FrmBanco extends JFrame {
         tp.addTab("Cuentas", spCuentas);
         tp.addTab("Transacciones", spTransacciones);
 
-        getContentPane().add(tbBanco, BorderLayout.NORTH);
-        getContentPane().add(tp, BorderLayout.CENTER);
+        add(tbBanco, BorderLayout.NORTH);
+        add(tp, BorderLayout.CENTER);
     }
 
     private void btnAgregarCuentaClick() {
