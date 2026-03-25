@@ -1,6 +1,7 @@
 package modelos;
 
 public abstract class Cuenta {
+    
     private String titular;
     private String numero;
     private double saldo;
