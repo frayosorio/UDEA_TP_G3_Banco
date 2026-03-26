@@ -1,7 +1,7 @@
 package modelos;
 
 public abstract class Cuenta {
-    
+
     private String titular;
     private String numero;
     private double saldo;
@@ -37,5 +37,7 @@ public abstract class Cuenta {
         }
         return false;
     }
+
+    public abstract String[] getDatos();
 
 }

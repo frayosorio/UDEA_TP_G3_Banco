@@ -1,5 +1,7 @@
 package modelos;
 
+import java.text.DecimalFormat;
+
 public class Credito extends Cuenta {
 
     private double valorPrestado;
@@ -53,17 +55,27 @@ public class Credito extends Cuenta {
         return false;
     }
 
-    public boolean pagarCuota(double cantidad) {
+    public boolean pagar(double cantidad) {
         if (cantidad > 0 && getSaldo() < valorPrestado) {
             var intereses = getSaldoDeuda() * tasaInteres / 100;
             var abonoCapital = cantidad - intereses;
-            if (abonoCapital > 0) {
-                setSaldo(getSaldo() + abonoCapital);
-                return true;
-            }
+            return depositar(abonoCapital);
         }
         return false;
+    }
 
+    @Override
+    public String[] getDatos() {
+        DecimalFormat df = new DecimalFormat("#,##0.00");
+        return new String[] {
+                "Crédito",
+                getNumero(),
+                getTitular(),
+                "Saldo Adeudado $" + df.format(getSaldoDeuda()) + " Saldo Pagado $ " + df.format(getSaldo())
+                        + " Disponible Retiro $" + df.format(getDisponibleRetiro()),
+                "Valor Préstamo $" + df.format(valorPrestado) + " Tasa Interés " + df.format(tasaInteres) + "% Plazo"
+                        + String.valueOf(plazo) + " Cuota $" + df.format(getCuota())
+        };
     }
 
 }
