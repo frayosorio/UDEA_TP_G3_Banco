@@ -17,6 +17,13 @@ public class CuentaServicio {
     private static List<Cuenta> cuentas = new ArrayList();
     public static String[] encabezados = new String[] { "Tipo", "Número", "Titular", "Saldo", "Descripción" };
 
+    public static Cuenta getCuenta(int posicion) {
+        if (posicion >= 0 && posicion < cuentas.size()) {
+            return cuentas.get(posicion);
+        }
+        return null;
+    }
+
     public static void mostrar(JTable tbl) {
         String[][] datos = new String[cuentas.size()][encabezados.length];
 
@@ -33,7 +40,7 @@ public class CuentaServicio {
         tbl.setModel(dtm);
     }
 
-    public static void agregar(TipoCuenta tipo,
+    public static Cuenta agregar(TipoCuenta tipo,
             String titular,
             String numero,
             double sobregiro,
@@ -55,6 +62,16 @@ public class CuentaServicio {
         }
 
         cuentas.add(cuenta);
+
+        return cuenta;
+    }
+
+    public static boolean eliminar(int posicion) {
+        if (posicion >= 0 && posicion < cuentas.size()) {
+            cuentas.remove(posicion);
+            return true;
+        }
+        return false;
     }
 
 }

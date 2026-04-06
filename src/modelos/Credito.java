@@ -78,4 +78,25 @@ public class Credito extends Cuenta {
         };
     }
 
+    @Override
+    public String toString() {
+        return "Crédito [Numero=" + getNumero() + ", Titular=" + getTitular() + "]";
+    }
+
+    @Override
+    public double getSaldoPorTransaccion(TipoTransaccion tipo) {
+        return tipo == TipoTransaccion.RETIRO ? getDisponibleRetiro() : getSaldoDeuda();
+    }
+
+    @Override
+    public boolean procesarTransaccion(TipoTransaccion tipo, double valor) {
+        switch (tipo) {
+            case DEPOSITO:
+                return pagar(valor);
+            case RETIRO:
+                return retirar(valor);
+        }
+        return false;
+    }
+
 }

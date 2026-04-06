@@ -40,4 +40,10 @@ public abstract class Cuenta {
 
     public abstract String[] getDatos();
 
+    public double getSaldoPorTransaccion(TipoTransaccion tipo) {
+        return saldo;
+    }
+
+    public abstract boolean procesarTransaccion(TipoTransaccion tipo, double valor);
+
 }

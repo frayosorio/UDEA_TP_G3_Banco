@@ -30,14 +30,30 @@ public class Ahorro extends Cuenta {
 
     @Override
     public String[] getDatos() {
-        DecimalFormat df=new DecimalFormat("#,##0.00");
-        return new String[]{
+        DecimalFormat df = new DecimalFormat("#,##0.00");
+        return new String[] {
                 "Ahorro",
                 getNumero(),
                 getTitular(),
                 df.format(getSaldo()),
-                "Tasa interés: "+df.format(tasaInteres)+" %"
+                "Tasa interés: " + df.format(tasaInteres) + " %"
         };
+    }
+
+    @Override
+    public String toString() {
+        return "Ahorros [Numero=" + getNumero() + ", Titular=" + getTitular() + "]";
+    }
+
+    @Override
+    public boolean procesarTransaccion(TipoTransaccion tipo, double valor) {
+        switch (tipo) {
+            case DEPOSITO:
+                return depositar(valor);
+            case RETIRO:
+                return retirar(valor);
+        }
+        return false;
     }
 
 }
