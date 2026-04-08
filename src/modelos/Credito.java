@@ -2,7 +2,12 @@ package modelos;
 
 import java.text.DecimalFormat;
 
-public class Credito extends Cuenta {
+import interfaces.IMostrable;
+import interfaces.IPagable;
+import interfaces.IRetirable;
+import interfaces.ITransaccionable;
+
+public class Credito extends Cuenta implements IPagable, IRetirable, IMostrable, ITransaccionable {
 
     private double valorPrestado;
     private double tasaInteres;
@@ -33,17 +38,30 @@ public class Credito extends Cuenta {
         return valorRetirado;
     }
 
+    @Override
     public double getCuota() {
         double tasaReal = tasaInteres / 100;
         return valorPrestado * Math.pow(1 + tasaReal, plazo) * tasaReal / (Math.pow(1 + tasaReal, plazo) - 1);
     }
 
-    public double getDisponibleRetiro() {
-        return valorPrestado - valorRetirado;
-    }
-
+    @Override
     public double getSaldoDeuda() {
         return valorPrestado - getSaldo();
+    }
+
+    @Override
+    public boolean pagar(double cantidad) {
+        if (cantidad > 0 && getSaldo() < valorPrestado) {
+            var intereses = getSaldoDeuda() * tasaInteres / 100;
+            var abonoCapital = cantidad - intereses;
+            return depositar(abonoCapital);
+        }
+        return false;
+    }
+
+    @Override
+    public double getDisponibleRetiro() {
+        return valorPrestado - valorRetirado;
     }
 
     @Override
@@ -51,15 +69,6 @@ public class Credito extends Cuenta {
         if (cantidad > 0 && cantidad <= getDisponibleRetiro()) {
             valorRetirado += cantidad;
             return true;
-        }
-        return false;
-    }
-
-    public boolean pagar(double cantidad) {
-        if (cantidad > 0 && getSaldo() < valorPrestado) {
-            var intereses = getSaldoDeuda() * tasaInteres / 100;
-            var abonoCapital = cantidad - intereses;
-            return depositar(abonoCapital);
         }
         return false;
     }

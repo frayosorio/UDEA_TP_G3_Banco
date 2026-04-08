@@ -320,6 +320,7 @@ public class FrmBanco extends JFrame {
                     valor);
             if (transaccionAgregada != null) {
                 TransaccionServicio.mostrar(tblTransacciones);
+                CuentaServicio.mostrar(tblCuentas);
                 pnlEditarTransaccion.setVisible(false);
             } else {
                 JOptionPane.showMessageDialog(null, "No se pudo realizar la transacción");

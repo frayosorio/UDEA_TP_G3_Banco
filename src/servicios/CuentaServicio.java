@@ -6,6 +6,7 @@ import java.util.List;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import interfaces.IMostrable;
 import modelos.Ahorro;
 import modelos.Corriente;
 import modelos.Credito;
@@ -30,7 +31,7 @@ public class CuentaServicio {
         int fila = 0;
         for (Cuenta cuenta : cuentas) {
             int columna = 0;
-            for (String dato : cuenta.getDatos()) {
+            for (String dato : ((IMostrable)cuenta).getDatos()) {
                 datos[fila][columna] = dato;
                 columna++;
             }
