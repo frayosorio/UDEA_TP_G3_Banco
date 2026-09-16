@@ -19,6 +19,8 @@ import javax.swing.JToolBar;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
 
+
+
 public class FrmBanco extends JFrame {
 
     public String[] encabezadosCuentas = new String[] { "Tipo", "Número", "Titular", "Saldo",
@@ -231,6 +233,7 @@ public class FrmBanco extends JFrame {
 
         add(tbBanco, BorderLayout.NORTH);
         add(tp, BorderLayout.CENTER);
+
     }
 
     private void btnAgregarCuentaClick() {
