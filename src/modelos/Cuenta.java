@@ -42,4 +42,7 @@ public abstract class Cuenta {
         return false;
     }
 
+    // metodo que cada claser HIJA llenará con los datos a mostrar
+    public abstract String[] getDatos();
+
 }

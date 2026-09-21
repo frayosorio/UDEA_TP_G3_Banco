@@ -2,8 +2,6 @@ package servicios;
 
 import java.util.List;
 
-import javax.swing.JTable;
-
 import modelos.Cuenta;
 import modelos.TipoCuenta;
 import modelos.Ahorros;
@@ -12,7 +10,15 @@ import modelos.Credito;
 
 public class CuentaServicio {
 
+    private static String[] encabezados = new String[] { "Tipo", "Número", "Titular", 
+            "Parámetros del Producto",
+            "Saldos" };
+
     private static List<Cuenta> cuentas;
+
+    public static String[] getEncabezados() {
+        return encabezados;
+    }
 
     public static Cuenta agregar(TipoCuenta tipo,
             String titular,
@@ -20,8 +26,7 @@ public class CuentaServicio {
             double tasaInteres,
             double sobregiro,
             int plazo,
-            double valorPrestado
-        ) {
+            double valorPrestado) {
         Cuenta cuenta = null;
         switch (tipo) {
             case AHORROS:
@@ -34,13 +39,17 @@ public class CuentaServicio {
                 cuenta = new Credito(titular, numero, valorPrestado, tasaInteres, plazo);
                 break;
         }
-        if(cuenta!=null){
+        if (cuenta != null) {
             cuentas.add(cuenta);
         }
         return cuenta;
     }
 
-    public void mostrar(JTable tabla){
+    public static String[][] getDatos() {
+        String[][] datos=new String[cuentas.size()][encabezados.length];
+        for(Cuenta cuenta:cuentas){
 
+        }
+        return  datos;
     }
 }

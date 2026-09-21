@@ -65,4 +65,10 @@ public class Credito extends Cuenta {
         return false;
     }
 
+    @Override
+    public String[] getDatos() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getDatos'");
+    }
+
 }

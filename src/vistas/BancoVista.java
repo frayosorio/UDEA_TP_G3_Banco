@@ -1,3 +1,4 @@
+package vistas;
 import java.awt.event.ActionListener;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -23,10 +24,9 @@ import modelos.TipoCuenta;
 
 
 
-public class FrmBanco extends JFrame {
+public class BancoVista extends JFrame {
 
-    public String[] encabezadosCuentas = new String[] { "Tipo", "Número", "Titular", "Saldo",
-            "Sobregiro o Límite" };
+    
     public String[] encabezadosTransacciones = new String[] { "Cuenta", "Tipo", "ValorTransaccion", "Saldo" };
     private String[] opcionesTransaccion = new String[] { "Depósito", "Retiro" };
 
@@ -38,7 +38,7 @@ public class FrmBanco extends JFrame {
 
     JTabbedPane tp;
 
-    public FrmBanco() {
+    public BancoVista() {
         setSize(600, 400);
         setTitle("Cuentas Bancarias");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -122,14 +122,45 @@ public class FrmBanco extends JFrame {
         pnlEditarCuenta.add(txtValor);
 
         JLabel lblPlazo = new JLabel("Plazo");
-        lblPlazo.setBounds(220, 40, 100, 25);
+        lblPlazo.setBounds(430, 40, 100, 25);
         lblPlazo.setVisible(false);
         pnlEditarCuenta.add(lblPlazo);
 
         txtPlazo = new JTextField();
-        txtPlazo.setBounds(320, 40, 100, 25);
+        txtPlazo.setBounds(480, 40, 100, 25);
         txtPlazo.setVisible(false);
         pnlEditarCuenta.add(txtPlazo);
+
+        cmbTipoCuenta.addActionListener(e -> {
+            switch ((TipoCuenta) cmbTipoCuenta.getSelectedItem()) {
+                case AHORROS:
+                    lblValor.setVisible(false);
+                    txtValor.setVisible(false);
+                    lblTasaInteres.setVisible(true);
+                    txtTasaInteres.setVisible(true);
+                    lblPlazo.setVisible(false);
+                    txtPlazo.setVisible(false);
+                    break;
+                case CORRIENTE:
+                    lblValor.setVisible(true);
+                    lblValor.setText("Sobregiro:");
+                    txtValor.setVisible(true);
+                    lblTasaInteres.setVisible(false);
+                    txtTasaInteres.setVisible(false);
+                    lblPlazo.setVisible(false);
+                    txtPlazo.setVisible(false);
+                    break;
+                case CREDITO:
+                    lblValor.setVisible(true);
+                    lblValor.setText("Valor Prestado:");
+                    txtValor.setVisible(true);
+                    lblTasaInteres.setVisible(true);
+                    txtTasaInteres.setVisible(true);
+                    lblPlazo.setVisible(true);
+                    txtPlazo.setVisible(true);
+                    break;
+            }
+        });
 
         JButton btnGuardarCuenta = new JButton("Guardar");
         btnGuardarCuenta.setBounds(220, 70, 100, 25);
@@ -151,8 +182,7 @@ public class FrmBanco extends JFrame {
         tblCuentas = new JTable();
         JScrollPane spListaCuentas = new JScrollPane(tblCuentas);
 
-        DefaultTableModel dtm = new DefaultTableModel(null, encabezadosCuentas);
-        tblCuentas.setModel(dtm);
+        
 
         // Agregar componentes
         pnlCuentas.add(pnlEditarCuenta);
@@ -218,8 +248,8 @@ public class FrmBanco extends JFrame {
         tblTransacciones = new JTable();
         JScrollPane spListaTransacciones = new JScrollPane(tblTransacciones);
 
-        dtm = new DefaultTableModel(null, encabezadosTransacciones);
-        tblTransacciones.setModel(dtm);
+        //dtm = new DefaultTableModel(null, encabezadosTransacciones);
+        //tblTransacciones.setModel(dtm);
 
         // Agregar componentes
         pnlTransacciones.add(pnlEditarTransaccion);
@@ -236,6 +266,11 @@ public class FrmBanco extends JFrame {
         add(tbBanco, BorderLayout.NORTH);
         add(tp, BorderLayout.CENTER);
 
+    }
+
+    public void mostrarCuentas(String[][] datos, String[] encabezados){
+        DefaultTableModel dtm=new DefaultTableModel(datos, encabezados);
+        tblCuentas.setModel(dtm);
     }
 
     private void btnAgregarCuentaClick() {

@@ -23,6 +23,12 @@ public class Corriente extends Cuenta {
 
     }
 
+    @Override
+    public String[] getDatos() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getDatos'");
+    }
+
 
 
 
