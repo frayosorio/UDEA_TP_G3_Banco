@@ -1,5 +1,7 @@
 package modelos;
 
+import java.text.DecimalFormat;
+
 public class Credito extends Cuenta {
 
     private double valorPrestado;
@@ -7,7 +9,7 @@ public class Credito extends Cuenta {
     private int plazo;
     private double valorRetirado;
 
-    public Credito(String titular, String numero, 
+    public Credito(String titular, String numero,
             double valorPrestado, double tasaInteres, int plazo) {
         super(numero, titular);
         this.valorPrestado = valorPrestado;
@@ -37,8 +39,9 @@ public class Credito extends Cuenta {
     }
 
     public double getCuota() {
-        double factor = Math.pow(1 + tasaInteres / 100, plazo);
-        return valorPrestado * factor * tasaInteres / (factor - 1);
+        double tasa = tasaInteres / 100;
+        double factor = Math.pow(1 + tasa, plazo);
+        return valorPrestado * factor * tasa / (factor - 1);
     }
 
     public double getSaldoDeuda() {
@@ -67,8 +70,15 @@ public class Credito extends Cuenta {
 
     @Override
     public String[] getDatos() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getDatos'");
+        DecimalFormat df = new DecimalFormat("#,##0.00");
+        return new String[] {
+                "CREDITO",
+                getNumero(),
+                getTitular(),
+                "Valor Préstamo $" + df.format(valorPrestado) + " Tasa Interés " + df.format(tasaInteres) + "% Plazo"
+                        + plazo + " Cuota $" + df.format(getCuota()),
+                "Saldo Adeudado $" + df.format(getSaldoDeuda())
+        };
     }
 
 }

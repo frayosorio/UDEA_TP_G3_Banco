@@ -1,4 +1,5 @@
 package vistas;
+
 import java.awt.event.ActionListener;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -22,11 +23,8 @@ import javax.swing.table.DefaultTableModel;
 
 import modelos.TipoCuenta;
 
-
-
 public class BancoVista extends JFrame {
 
-    
     public String[] encabezadosTransacciones = new String[] { "Cuenta", "Tipo", "ValorTransaccion", "Saldo" };
     private String[] opcionesTransaccion = new String[] { "Depósito", "Retiro" };
 
@@ -37,6 +35,8 @@ public class BancoVista extends JFrame {
     private JComboBox cmbTipoCuenta, cmbTipoTransaccion, cmbCuenta;
 
     JTabbedPane tp;
+
+    JButton btnGuardarCuenta;
 
     public BancoVista() {
         setSize(600, 400);
@@ -106,7 +106,7 @@ public class BancoVista extends JFrame {
 
         cmbTipoCuenta = new JComboBox();
         cmbTipoCuenta.setBounds(220, 10, 100, 25);
-        
+
         DefaultComboBoxModel mdlTipoCuenta = new DefaultComboBoxModel(TipoCuenta.values());
         cmbTipoCuenta.setModel(mdlTipoCuenta);
         pnlEditarCuenta.add(cmbTipoCuenta);
@@ -162,11 +162,9 @@ public class BancoVista extends JFrame {
             }
         });
 
-        JButton btnGuardarCuenta = new JButton("Guardar");
+        btnGuardarCuenta = new JButton("Guardar");
         btnGuardarCuenta.setBounds(220, 70, 100, 25);
-        btnGuardarCuenta.addActionListener(evt -> {
-            btnGuardarCuentaClick();
-        });
+
         pnlEditarCuenta.add(btnGuardarCuenta);
 
         JButton btnCancelarCuenta = new JButton("Cancelar");
@@ -181,8 +179,6 @@ public class BancoVista extends JFrame {
         // Panel 2 (siempre visible)
         tblCuentas = new JTable();
         JScrollPane spListaCuentas = new JScrollPane(tblCuentas);
-
-        
 
         // Agregar componentes
         pnlCuentas.add(pnlEditarCuenta);
@@ -248,8 +244,8 @@ public class BancoVista extends JFrame {
         tblTransacciones = new JTable();
         JScrollPane spListaTransacciones = new JScrollPane(tblTransacciones);
 
-        //dtm = new DefaultTableModel(null, encabezadosTransacciones);
-        //tblTransacciones.setModel(dtm);
+        // dtm = new DefaultTableModel(null, encabezadosTransacciones);
+        // tblTransacciones.setModel(dtm);
 
         // Agregar componentes
         pnlTransacciones.add(pnlEditarTransaccion);
@@ -268,8 +264,50 @@ public class BancoVista extends JFrame {
 
     }
 
-    public void mostrarCuentas(String[][] datos, String[] encabezados){
-        DefaultTableModel dtm=new DefaultTableModel(datos, encabezados);
+    // getters
+    public TipoCuenta getTipoCuentaSeleccionado() {
+        return (TipoCuenta) cmbTipoCuenta.getSelectedItem();
+    }
+
+    public String getTitular() {
+        return txtTitular.getText();
+    }
+
+    public String getNumero() {
+        return txtNumero.getText();
+    }
+
+    public double getTasaInteres() {
+        try {
+            return Double.parseDouble(txtTasaInteres.getText());
+        } catch (Exception ex) {
+            return 0;
+        }
+    }
+
+    public double getValor() {
+        try {
+            return Double.parseDouble(txtValor.getText());
+        } catch (Exception ex) {
+            return 0;
+        }
+    }
+
+    public int getPlazo() {
+        try {
+            return Integer.parseInt(txtPlazo.getText());
+        } catch (Exception ex) {
+            return 0;
+        }
+    }
+
+    // setters
+    public void setGuardarCuentaClick(ActionListener escuchadorEventos){
+        btnGuardarCuenta.addActionListener(escuchadorEventos);
+    }
+
+    public void mostrarCuentas(String[][] datos, String[] encabezados) {
+        DefaultTableModel dtm = new DefaultTableModel(datos, encabezados);
         tblCuentas.setModel(dtm);
     }
 
@@ -283,14 +321,12 @@ public class BancoVista extends JFrame {
 
     }
 
-    private void btnGuardarCuentaClick() {
+    public void ocultarEdicionCuenta() {
         pnlEditarCuenta.setVisible(false);
-
     }
 
     private void btnCancelarCuentaClick() {
-        pnlEditarCuenta.setVisible(false);
-
+        ocultarEdicionCuenta();
     }
 
     private void btnTransaccionClick() {

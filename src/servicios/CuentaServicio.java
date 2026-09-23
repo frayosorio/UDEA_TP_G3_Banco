@@ -1,5 +1,6 @@
 package servicios;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import modelos.Cuenta;
@@ -10,11 +11,11 @@ import modelos.Credito;
 
 public class CuentaServicio {
 
-    private static String[] encabezados = new String[] { "Tipo", "Número", "Titular", 
+    private static String[] encabezados = new String[] { "Tipo", "Número", "Titular",
             "Parámetros del Producto",
             "Saldos" };
 
-    private static List<Cuenta> cuentas;
+    private static List<Cuenta> cuentas = new ArrayList<>();
 
     public static String[] getEncabezados() {
         return encabezados;
@@ -46,10 +47,18 @@ public class CuentaServicio {
     }
 
     public static String[][] getDatos() {
-        String[][] datos=new String[cuentas.size()][encabezados.length];
-        for(Cuenta cuenta:cuentas){
-
+        String[][] datos = new String[cuentas.size()][encabezados.length];
+        int fila = 0;
+        for (Cuenta cuenta : cuentas) {
+            int columna = 0;
+            for (var dato : cuenta.getDatos()) {
+                if (columna < encabezados.length) {
+                    datos[fila][columna] = dato;
+                }
+                columna++;
+            }
+            fila++;
         }
-        return  datos;
+        return datos;
     }
 }
