@@ -10,7 +10,7 @@ public class Credito extends Cuenta {
     private double valorRetirado;
 
     public Credito(String titular, String numero,
-            double valorPrestado, double tasaInteres, int plazo) {
+                   double valorPrestado, double tasaInteres, int plazo) {
         super(numero, titular);
         this.valorPrestado = valorPrestado;
         this.tasaInteres = tasaInteres;
@@ -71,7 +71,7 @@ public class Credito extends Cuenta {
     @Override
     public String[] getDatos() {
         DecimalFormat df = new DecimalFormat("#,##0.00");
-        return new String[] {
+        return new String[]{
                 "CREDITO",
                 getNumero(),
                 getTitular(),
@@ -79,6 +79,11 @@ public class Credito extends Cuenta {
                         + plazo + " Cuota $" + df.format(getCuota()),
                 "Saldo Adeudado $" + df.format(getSaldoDeuda())
         };
+    }
+
+    @Override
+    public String toString() {
+        return "CREDITO #[" + getNumero() + "] Titular[" + getTitular() + "]";
     }
 
 }

@@ -11,9 +11,9 @@ import modelos.Credito;
 
 public class CuentaServicio {
 
-    private static String[] encabezados = new String[] { "Tipo", "Número", "Titular",
+    private static String[] encabezados = new String[]{"Tipo", "Número", "Titular",
             "Parámetros del Producto",
-            "Saldos" };
+            "Saldos"};
 
     private static List<Cuenta> cuentas = new ArrayList<>();
 
@@ -22,12 +22,12 @@ public class CuentaServicio {
     }
 
     public static Cuenta agregar(TipoCuenta tipo,
-            String titular,
-            String numero,
-            double tasaInteres,
-            double sobregiro,
-            int plazo,
-            double valorPrestado) {
+                                 String titular,
+                                 String numero,
+                                 double tasaInteres,
+                                 double sobregiro,
+                                 int plazo,
+                                 double valorPrestado) {
         Cuenta cuenta = null;
         switch (tipo) {
             case AHORROS:
@@ -61,4 +61,13 @@ public class CuentaServicio {
         }
         return datos;
     }
+
+    public static boolean eliminar(int posicion) {
+        if (posicion >= 0 && posicion < cuentas.size()) {
+            cuentas.remove(posicion);
+            return true;
+        }
+        return false;
+    }
+
 }

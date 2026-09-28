@@ -40,4 +40,9 @@ public class Ahorros extends Cuenta {
         };
     }
 
+    @Override
+    public String toString(){
+        return "AHORRO #["+getNumero()+"] Titular["+getTitular()+"]";
+    }
+
 }

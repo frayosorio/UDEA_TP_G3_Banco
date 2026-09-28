@@ -11,10 +11,10 @@ public class Corriente extends Cuenta {
         this.sobregiro = sobregiro;
     }
 
-	public double getSobregiro() {
-		return sobregiro;
-	}
-    
+    public double getSobregiro() {
+        return sobregiro;
+    }
+
     @Override
     public boolean retirar(double valor) {
         if (valor > 0 && valor <= getSaldo() + sobregiro) {
@@ -29,17 +29,18 @@ public class Corriente extends Cuenta {
     public String[] getDatos() {
         DecimalFormat df = new DecimalFormat("#,##0.00");
         return new String[]{
-            "CORRIENTE",
-            getNumero(),
-            getTitular(),
-            "Sobregiro= $"+ df.format(sobregiro),
-            df.format(getSaldo())
+                "CORRIENTE",
+                getNumero(),
+                getTitular(),
+                "Sobregiro= $" + df.format(sobregiro),
+                df.format(getSaldo())
         };
     }
 
-
-
-
+    @Override
+    public String toString() {
+        return "CORRIENTE #[" + getNumero() + "] Titular[" + getTitular() + "]";
+    }
 
 
 }
