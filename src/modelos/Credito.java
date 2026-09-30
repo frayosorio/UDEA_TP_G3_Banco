@@ -53,7 +53,7 @@ public class Credito extends Cuenta {
             var intereses = getSaldoDeuda() * tasaInteres / 100;
             var abonoCapital = valor - intereses;
             if (abonoCapital <= getSaldoDeuda()) {
-                return depositar(valor);
+                return depositar(abonoCapital);
             }
         }
         return false;
@@ -82,8 +82,24 @@ public class Credito extends Cuenta {
     }
 
     @Override
+    public boolean procesarTransaccion(TipoTransaccion tipo, double valor) {
+        switch (tipo) {
+            case DEPOSITO:
+                return pagar(valor);
+            case RETIRO:
+                return retirar(valor);
+        }
+        return false;
+    }
+
+    @Override
     public String toString() {
         return "CREDITO #[" + getNumero() + "] Titular[" + getTitular() + "]";
+    }
+
+    @Override
+    public double getSaldoTransaccion(TipoTransaccion tipo) {
+        return tipo == TipoTransaccion.RETIRO ? getSaldoRetiro() : getSaldoDeuda();
     }
 
 }

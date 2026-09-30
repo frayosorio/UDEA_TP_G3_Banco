@@ -22,7 +22,7 @@ public class BancoVista extends JFrame {
 
     JTabbedPane tp;
 
-    JButton btnGuardarCuenta, btnQuitarCuenta;
+    JButton btnGuardarCuenta, btnQuitarCuenta, btnGuardarTransaccion;
 
     public BancoVista() {
         setSize(600, 400);
@@ -207,11 +207,8 @@ public class BancoVista extends JFrame {
         txtValorTransaccion.setBounds(110, 70, 100, 25);
         pnlEditarTransaccion.add(txtValorTransaccion);
 
-        JButton btnGuardarTransaccion = new JButton("Guardar");
+        btnGuardarTransaccion = new JButton("Guardar");
         btnGuardarTransaccion.setBounds(220, 70, 100, 25);
-        btnGuardarTransaccion.addActionListener(evt -> {
-            btnGuardarTransaccionClick();
-        });
         pnlEditarTransaccion.add(btnGuardarTransaccion);
 
         JButton btnCancelarTransaccion = new JButton("Cancelar");
@@ -285,6 +282,22 @@ public class BancoVista extends JFrame {
         return tblCuentas.getSelectedRow();
     }
 
+    public TipoTransaccion getTipoTransaccionSeleccionado(){
+        return (TipoTransaccion) cmbTipoTransaccion.getSelectedItem();
+    }
+
+    public int getIndiceCuentaSeleccionado(){
+        return  cmbCuenta.getSelectedIndex();
+    }
+
+    public double getValorTransaccion() {
+        try {
+            return Double.parseDouble(txtValorTransaccion.getText());
+        } catch (Exception ex) {
+            return 0;
+        }
+    }
+
     // setters
     public void setGuardarCuentaClick(ActionListener escuchadorEventos) {
         btnGuardarCuenta.addActionListener(escuchadorEventos);
@@ -292,6 +305,10 @@ public class BancoVista extends JFrame {
 
     public void setEliminarCuentaClick(ActionListener escuchadorEventos) {
         btnQuitarCuenta.addActionListener(escuchadorEventos);
+    }
+
+    public void setGuardarTransaccionClick(ActionListener escuchadorEventos) {
+        btnGuardarTransaccion.addActionListener(escuchadorEventos);
     }
 
     public void setCuentaTransaccion(String datosCuenta) {
@@ -331,14 +348,16 @@ public class BancoVista extends JFrame {
         }
     }
 
+    public void ocultarEdicionTransaccion() {
+        pnlEditarTransaccion.setVisible(false);
+    }
+
     // eventos
 
     private void btnAgregarCuentaClick() {
         pnlEditarCuenta.setVisible(true);
         tp.setSelectedIndex(0);
-
     }
-
 
     private void btnCancelarCuentaClick() {
         ocultarEdicionCuenta();
@@ -347,17 +366,10 @@ public class BancoVista extends JFrame {
     private void btnTransaccionClick() {
         pnlEditarTransaccion.setVisible(true);
         tp.setSelectedIndex(1);
-
-    }
-
-    private void btnGuardarTransaccionClick() {
-        pnlEditarTransaccion.setVisible(false);
-
     }
 
     private void btnCancelarTransaccionClick() {
-        pnlEditarTransaccion.setVisible(false);
-
+        ocultarEdicionTransaccion();
     }
 
 }

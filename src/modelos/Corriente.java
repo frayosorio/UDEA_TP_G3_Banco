@@ -22,7 +22,6 @@ public class Corriente extends Cuenta {
             return true;
         }
         return false;
-
     }
 
     @Override
@@ -35,6 +34,17 @@ public class Corriente extends Cuenta {
                 "Sobregiro= $" + df.format(sobregiro),
                 df.format(getSaldo())
         };
+    }
+
+    @Override
+    public boolean procesarTransaccion(TipoTransaccion tipo, double valor) {
+        switch (tipo) {
+            case DEPOSITO:
+                return depositar(valor);
+            case RETIRO:
+                return retirar(valor);
+        }
+        return false;
     }
 
     @Override

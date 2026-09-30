@@ -14,6 +14,7 @@ public class BancoControlador {
 
         this.vista.setGuardarCuentaClick(evento -> agregarCuenta());
         this.vista.setEliminarCuentaClick(evento -> eliminarCuenta());
+        this.vista.setGuardarTransaccionClick(evento -> agregarTransaccion());
 
         mostrarCuentas();
         mostrarTransacciones();
@@ -27,7 +28,6 @@ public class BancoControlador {
         vista.mostrarTransacciones(TransaccionServicio.getDatos(), TransaccionServicio.getEncabezados());
     }
 
-
     private void agregarCuenta() {
         var tipo = vista.getTipoCuentaSeleccionado();
         var titular = vista.getTitular();
@@ -37,23 +37,46 @@ public class BancoControlador {
         var plazo = tipo == TipoCuenta.CREDITO ? vista.getPlazo() : 0;
         var valorPrestado = tipo == TipoCuenta.CREDITO ? vista.getValor() : 0;
 
-        var cuentaAgregada=CuentaServicio.agregar(tipo,
+        var cuentaAgregada = CuentaServicio.agregar(tipo,
                 titular, numero, tasaInteres, sobregiro, plazo, valorPrestado);
+        if (cuentaAgregada != null) {
+            vista.setCuentaTransaccion(cuentaAgregada.toString());
+            mostrarCuentas();
+            vista.ocultarEdicionCuenta();
+        } else {
+            vista.mostrarMensaje("La cuenta no pudo ser agregada");
+        }
 
-        vista.setCuentaTransaccion(cuentaAgregada.toString());
-        vista.ocultarEdicionCuenta();
-        mostrarCuentas();
     }
 
     private void eliminarCuenta() {
         if (vista.getFilaCuentaSeleccionada() >= 0) {
-            if(vista.confirmar("¿Está seguro de retirar la cuenta?")){
+            if (vista.confirmar("¿Está seguro de retirar la cuenta?")) {
                 CuentaServicio.eliminar(vista.getFilaCuentaSeleccionada());
                 vista.quitarCuentaTransaccion(vista.getFilaCuentaSeleccionada());
                 mostrarCuentas();
             }
         } else {
             vista.mostrarMensaje("Debe seleccionar una cuenta");
+        }
+    }
+
+    private void agregarTransaccion() {
+        var tipo = vista.getTipoTransaccionSeleccionado();
+        var cuenta = vista.getIndiceCuentaSeleccionado() >= 0 ?
+                CuentaServicio.get(vista.getIndiceCuentaSeleccionado()) : null;
+        var valor = vista.getValorTransaccion();
+
+        if (cuenta == null) {
+            vista.mostrarMensaje("Debe seleccionar una duenta");
+            return;
+        }
+        var transaccion = TransaccionServicio.agregar(cuenta, tipo, valor);
+        if (transaccion != null) {
+            vista.ocultarEdicionTransaccion();
+            mostrarTransacciones();
+        } else {
+            vista.mostrarMensaje("La transacción no pudo ser agregada");
         }
     }
 }

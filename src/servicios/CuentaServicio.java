@@ -21,6 +21,13 @@ public class CuentaServicio {
         return encabezados;
     }
 
+    public static Cuenta get(int posicion) {
+        if (posicion >= 0 && posicion < cuentas.size()) {
+            return cuentas.get(posicion);
+        }
+        return null;
+    }
+
     public static Cuenta agregar(TipoCuenta tipo,
                                  String titular,
                                  String numero,

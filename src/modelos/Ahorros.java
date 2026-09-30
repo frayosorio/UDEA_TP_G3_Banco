@@ -24,6 +24,17 @@ public class Ahorros extends Cuenta {
         return false;
     }
 
+    @Override
+    public boolean procesarTransaccion(TipoTransaccion tipo, double valor) {
+        switch (tipo) {
+            case DEPOSITO:
+                return depositar(valor);
+            case RETIRO:
+                return retirar(valor);
+        }
+        return false;
+    }
+
     public void abonarIntereses() {
         setSaldo(getSaldo() * (1 + tasa / 100));
     }
@@ -32,17 +43,17 @@ public class Ahorros extends Cuenta {
     public String[] getDatos() {
         DecimalFormat df = new DecimalFormat("#,##0.00");
         return new String[]{
-            "AHORROS",
-            getNumero(),
-            getTitular(),
-            "Tasa Interes="+ df.format(tasa)+" %",
-            df.format(getSaldo())
+                "AHORROS",
+                getNumero(),
+                getTitular(),
+                "Tasa Interes=" + df.format(tasa) + " %",
+                df.format(getSaldo())
         };
     }
 
     @Override
-    public String toString(){
-        return "AHORRO #["+getNumero()+"] Titular["+getTitular()+"]";
+    public String toString() {
+        return "AHORRO #[" + getNumero() + "] Titular[" + getTitular() + "]";
     }
 
 }

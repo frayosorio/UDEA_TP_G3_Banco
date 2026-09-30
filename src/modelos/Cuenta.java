@@ -35,14 +35,21 @@ public abstract class Cuenta {
     // metodo que se obliga a implementar a las clases HIJAs
     public abstract boolean retirar(double valor);
 
+    public abstract boolean procesarTransaccion(TipoTransaccion tipo, double valor);
+
     public boolean depositar(double valor) {
         if (valor > 0) {
             setSaldo(saldo + valor);
+            return true;
         }
         return false;
     }
 
     // metodo que cada clase HIJA llenará con los datos a mostrar
     public abstract String[] getDatos();
+
+    public double getSaldoTransaccion(TipoTransaccion tipo){
+        return saldo;
+    }
 
 }
